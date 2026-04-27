@@ -1,0 +1,12 @@
+{
+  "email": {
+    "user": "Javokhir381@gmail.com",
+    "password": "ttvx ldoc ixga qddm",
+    "from": "20-sonli maktab"
+  },
+  "codeSettings": {
+    "length": 6,
+    "expiryMinutes": 5,
+    "maxAttempts": 3
+  }
+}

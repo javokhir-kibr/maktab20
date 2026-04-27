@@ -1,0 +1,82 @@
+[
+  {
+    "id": "c464c7c4-3d9f-44e5-82c7-2dd1bb1bba53",
+    "login": "admin",
+    "password": "a307954764eae01a83cf0b7d506da18f8910b83af50d23088248c8dc07343895",
+    "role": "superadmin",
+    "name": "Super Admin",
+    "class": null,
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.760Z"
+  },
+  {
+    "id": "a452a04a-6647-4b12-997a-66e95d761cc2",
+    "login": "direktor",
+    "password": "0700061b3a849b850784d33ae8e07e92e7982c5b1e9e1e0268038e5b86968e79",
+    "role": "principal",
+    "name": "Nuritdinov Athamjon",
+    "class": null,
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "b358892b-07e2-4120-a118-727882314a07",
+    "login": "ilmiymudir",
+    "password": "2b1b1fe62f1b965f88bd8d7dfe0048ae750d66ae429ebefa416c556af9ef0e55",
+    "role": "co_principal",
+    "name": "Ubaydullayeva Mashxura",
+    "class": null,
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "3b23c77e-69d1-4c9b-aa73-b3c71de4a44c",
+    "login": "moderator",
+    "password": "3d28617ccb5ce401016b4fea447832c7c97429c4236f8774ba0bacb030d68406",
+    "role": "moderator",
+    "name": "Moderator",
+    "class": null,
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "96e98dfe-6990-4ebb-8d7f-ead486dfa23b",
+    "login": "kuzatuvchi",
+    "password": "fd9dfb95a88e6a5d895fc71683f4c98d685ab5ac9823d2d9f0474084933100de",
+    "role": "watcher",
+    "name": "Kuzatuvchi",
+    "class": null,
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "37031a07-d9fb-40ef-b0c0-ccd3d746f5f6",
+    "login": "ustoz1",
+    "password": "ecf78d5222876d214ec86787ce08e0a134d568c3b74bce72b5d6ea8eb949bbd4",
+    "role": "teacher",
+    "name": "Rahimova Umida",
+    "class": "9-A",
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "e9312001-e401-45e9-84e9-d6116149cb2d",
+    "login": "student001",
+    "password": "25a0784b4d9df65706e28618c646e89a0e9355618b9ef404560b90fe0f38a2ba",
+    "role": "student",
+    "name": "Ali Valiyev",
+    "class": "9-A",
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  },
+  {
+    "id": "a6918c8f-53e5-4892-9272-9d42d08b4155",
+    "login": "student002",
+    "password": "25a0784b4d9df65706e28618c646e89a0e9355618b9ef404560b90fe0f38a2ba",
+    "role": "student",
+    "name": "Mohira Karimova",
+    "class": "10-B",
+    "active": true,
+    "createdAt": "2026-04-27T15:25:01.762Z"
+  }
+]
