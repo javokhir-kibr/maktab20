@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="20-sonli umumiy o'rta ta'lim maktabi — Uychi tumani, Mashad mahallasi. Bilim, tarbiya va kelajak sari." />
+  <title>20-sonli UMT Maktabi — Uychi tumani</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar glass" id="navbar">
+    <div class="nav-inner container">
+      <a class="brand" href="#">
+        <div class="brand-badge">20</div>
+        <div class="brand-text">
+          <span class="brand-name">20-sonli maktab</span>
+          <small class="brand-tagline">Bilim · Tarbiya · Kelajak</small>
+        </div>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">Maktab haqida</a>
+        <a href="#leaders">Rahbariyat</a>
+        <a href="#subjects">Fanlar</a>
+        <a href="#news">Yangiliklar</a>
+        <a href="#contact">Aloqa</a>
+      </div>
+      <div class="nav-actions">
+        <span id="live-clock">00:00</span>
+        <a href="/login" class="btn btn-primary" style="padding:9px 18px;font-size:13px;border-radius:12px">🔑 Kirish</a>
+        <button id="theme-toggle" class="icon-btn" aria-label="Tungi rejim">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+        <button id="menu-toggle" class="icon-btn hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mobile-menu glass" id="mobile-menu">
+    <a href="#about" class="mob-link">🏫 Maktab haqida</a>
+    <a href="#leaders" class="mob-link">👤 Rahbariyat</a>
+    <a href="#subjects" class="mob-link">📚 Fanlar</a>
+    <a href="#news" class="mob-link">📰 Yangiliklar</a>
+    <a href="#contact" class="mob-link">📞 Aloqa</a>
+  </div>
+
+    <!-- Cursor & effects -->
+  <div id="c-glow"></div>
+  <div id="c-ring"></div>
+  <div id="c-dot"></div>
+  <div id="scroll-bar"></div>
+  <div id="ptcl-bg"></div>
+  <div class="container">
+
+    <!-- ═══ HERO ═══ -->
+    <header class="hero" id="home">
+      <div class="hero-grid">
+        <div class="hero-card glass animate-in" style="--delay:0ms">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            1964-yildan buyon ishonchli ta'lim maskani
+          </div>
+          <h1>
+            20-sonli<br />
+            <span class="gradient-text">umumiy o'rta<br />ta'lim maktabi</span>
+          </h1>
+          <p class="subtitle">
+            Uychi tumani, Mashad mahallasida joylashgan maktabimiz o'quvchilarga
+            sifatli ta'lim, mustahkam tarbiya va zamonaviy rivojlanish muhiti
+            yaratishga intiladi.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#about">
+              <span>Batafsil</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-secondary" href="#contact">Bog'lanish</a>
+            <a class="btn btn-secondary" href="#contact-form">Qabul uchun yozish</a>
+          </div>
+        </div>
+
+        <div class="visual glass animate-in" style="--delay:120ms">
+          <div class="scene">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+
+            <div class="school-block floating-card">
+              <div class="school-label">20-MAKTAB</div>
+              <div class="school-year">1964</div>
+              <div class="windows">
+                <div class="window"></div><div class="window"></div>
+                <div class="window"></div><div class="window"></div>
+                <div class="window"></div><div class="window"></div>
+                <div class="window"></div><div class="window"></div>
+                <div class="window"></div><div class="window"></div>
+              </div>
+              <div class="school-door"></div>
+            </div>
+
+            <div class="mini-card card-a floating-card">
+              <div class="mini-card-icon">🎓</div>
+              <strong id="hero-students">1424</strong>
+              <p>Faol o'quvchilar</p>
+            </div>
+
+            <div class="mini-card card-b floating-card">
+              <div class="mini-card-icon">👨‍🏫</div>
+              <strong>95</strong>
+              <p>Tajribali xodimlar</p>
+            </div>
+
+            <div class="mini-card card-c floating-card">
+              <div class="mini-card-icon">🏆</div>
+              <strong>1-o'rin</strong>
+              <p>Futbol olimpiadasi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ STATS ═══ -->
+    <section class="section" id="about">
+      <div class="section-header">
+        <div class="section-tag">📊 Statistika</div>
+        <h2 class="section-title">Maktab haqida</h2>
+        <p class="section-copy">
+          20-sonli umumiy o'rta ta'lim maktabi — davlat mulkiga mansub mustaqil umumiy ta'lim muassasasi.
+          Maktab <strong>1964-yil 5-avgustda</strong> tashkil etilgan bo'lib, bugungi kunda Uychi tumanidagi
+          muhim ta'lim maskanlaridan biri hisoblanadi. Bu yerda bilim bilan birga intizom, odob
+          va barkamol shaxs tarbiyasi ham ustuvor yo'nalish hisoblanadi.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card glass animate-in" style="--delay:0ms">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-number" data-target="1424">0</div>
+          <div class="stat-label">O'quvchilar soni</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="stat-card glass animate-in" style="--delay:80ms">
+          <div class="stat-icon">👨‍🏫</div>
+          <div class="stat-number" data-target="95">0</div>
+          <div class="stat-label">Xodimlar soni</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:72%"></div></div>
+        </div>
+        <div class="stat-card glass animate-in" style="--delay:160ms">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number" data-target="1964">0</div>
+          <div class="stat-label">Tashkil etilgan yil</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="stat-card glass animate-in" style="--delay:240ms">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number" data-target="61">0</div>
+          <div class="stat-label">Yillik tajriba</div>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ WHY US ═══ -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-tag">💡 Afzalliklar</div>
+        <h2 class="section-title">Nima uchun aynan bizning maktab?</h2>
+        <p class="section-copy">Maktabimiz o'quvchi, ota-ona va ustoz o'rtasidagi ishonchli hamkorlikni qadrlaydi.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card glass animate-in" style="--delay:0ms">
+          <div class="feature-icon">🎓</div>
+          <h3>Tajribali pedagoglar</h3>
+          <p>Malakali va fidoyi ustozlar o'quvchilarning bilim olishini muntazam qo'llab-quvvatlaydi. Har bir o'qituvchi o'z sohasining mutaxassisi.</p>
+        </div>
+        <div class="feature-card glass animate-in" style="--delay:100ms">
+          <div class="feature-icon">🛡️</div>
+          <h3>Xavfsiz muhit</h3>
+          <p>Xavfsiz, tartibli va rag'batlantiruvchi ta'lim muhiti har bir o'quvchi uchun maxsus yaratilgan. Har bir bola qadrlanadi.</p>
+        </div>
+        <div class="feature-card glass animate-in" style="--delay:200ms">
+          <div class="feature-icon">🤝</div>
+          <h3>Hamkorlik</h3>
+          <p>Ota-onalar, pedagoglar va rahbariyat bir maqsad yo'lida birgalikda ishlaydi. Ochiq muloqot va shaffoflik ustuvor.</p>
+        </div>
+        <div class="feature-card glass animate-in" style="--delay:300ms">
+          <div class="feature-icon">🏆</div>
+          <h3>Sport yutuqlari</h3>
+          <p>O'zbekiston bo'yicha qizlar futbol olimpiadasida hudud va tuman birinchiligi. Sport — sog'lom hayot asosi.</p>
+        </div>
+        <div class="feature-card glass animate-in" style="--delay:400ms">
+          <div class="feature-icon">📚</div>
+          <h3>Keng ta'lim dasturi</h3>
+          <p>8 ta asosiy fan bo'yicha chuqurlashtirilgan ta'lim. Matematikadan tortib informatikagacha zamonaviy yondashuv.</p>
+        </div>
+        <div class="feature-card glass animate-in" style="--delay:500ms">
+          <div class="feature-icon">🌱</div>
+          <h3>Shaxs tarbiyasi</h3>
+          <p>Bilim bilan birga milliy qadriyatlar, odob va barkamol shaxs tarbiyasi ustuvor yo'nalish hisoblanadi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ LEADERSHIP ═══ -->
+    <section class="section" id="leaders">
+      <div class="section-header">
+        <div class="section-tag">👤 Jamoa</div>
+        <h2 class="section-title">Rahbariyat</h2>
+        <p class="section-copy">Maktabimizning tajribali va fidoyi rahbariyat jamoasi bilan tanishing.</p>
+      </div>
+      <div class="leaders-grid">
+        <div class="leader-card glass animate-in" style="--delay:0ms">
+          <div class="leader-avatar">
+            <div class="avatar-initials">NA</div>
+          </div>
+          <div class="leader-info">
+            <h3>Nuritdinov Athamjon Ahmadjanovich</h3>
+            <span class="leader-role">Direktor</span>
+            <p class="leader-bio">Maktab direktori. Yuqori malakali pedagog va ma'muriyatchi.</p>
+          </div>
+        </div>
+        <div class="leader-card glass animate-in" style="--delay:120ms">
+          <div class="leader-avatar">
+            <div class="avatar-initials">UM</div>
+          </div>
+          <div class="leader-info">
+            <h3>Ubaydullayeva Mashxura Keldiboyevna</h3>
+            <span class="leader-role">Ilmiy mudir</span>
+            <p class="leader-bio">Ilmiy ishlar va o'quv jarayonini boshqaruvchi mudir.</p>
+          </div>
+        </div>
+        <div class="leader-card glass animate-in" style="--delay:240ms">
+          <div class="leader-avatar">
+            <div class="avatar-initials">SB</div>
+          </div>
+          <div class="leader-info">
+            <h3>Soliyeva Barnoxon Baxtiyor qizi</h3>
+            <span class="leader-role">Boshqaruv xodimi</span>
+            <p class="leader-bio">Maktab boshqaruvi va ma'muriy ishlarni tashkil etuvchi xodim.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-box glass animate-in" style="--delay:360ms">
+        <div class="admin-box-header">
+          <div class="admin-icon">🏛️</div>
+          <h3>Administratorlar</h3>
+        </div>
+        <div class="admin-list">
+          <span class="pill">Rahimova Umida Qodirjonovna</span>
+          <span class="pill">Nuritdinov Athamjon Ahmadjanovich</span>
+          <span class="pill">Ubaydullayeva Mashxura Keldiboyevna</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SUBJECTS ═══ -->
+    <section class="section" id="subjects">
+      <div class="section-header">
+        <div class="section-tag">📖 Ta'lim</div>
+        <h2 class="section-title">Asosiy fanlar</h2>
+        <p class="section-copy">Zamonaviy va keng qamrovli ta'lim dasturi asosida 8 ta asosiy fan o'qitiladi.</p>
+      </div>
+      <div class="subjects-grid">
+        <div class="subject-card glass animate-in" style="--delay:0ms">
+          <div class="subject-icon" style="--clr:#3b82f6">📘</div>
+          <h3>Ona tili va adabiyot</h3>
+          <p>O'zbek tili grammatikasi va badiiy adabiyot</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:60ms">
+          <div class="subject-icon" style="--clr:#8b5cf6">➗</div>
+          <h3>Matematika</h3>
+          <p>Algebra, geometriya va chuqur hisob-kitob</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:120ms">
+          <div class="subject-icon" style="--clr:#10b981">🌍</div>
+          <h3>Ingliz tili</h3>
+          <p>Zamonaviy xalqaro muloqot ko'nikmalari</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:180ms">
+          <div class="subject-icon" style="--clr:#f59e0b">💻</div>
+          <h3>Informatika</h3>
+          <p>Dasturlash asoslari va raqamli texnologiyalar</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:240ms">
+          <div class="subject-icon" style="--clr:#ef4444">🏛️</div>
+          <h3>Tarix</h3>
+          <p>O'zbekiston va jahon tarixi</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:300ms">
+          <div class="subject-icon" style="--clr:#14b8a6">🧬</div>
+          <h3>Biologiya</h3>
+          <p>Tirik tabiat va hayot fanlari</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:360ms">
+          <div class="subject-icon" style="--clr:#f97316">⚗️</div>
+          <h3>Kimyo</h3>
+          <p>Moddalar tuzilishi va kimyoviy reaksiyalar</p>
+        </div>
+        <div class="subject-card glass animate-in" style="--delay:420ms">
+          <div class="subject-icon" style="--clr:#6366f1">🔭</div>
+          <h3>Fizika</h3>
+          <p>Mexanika, elektr va zamonaviy fizika</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ NEWS ═══ -->
+    <section class="section" id="news">
+      <div class="section-header">
+        <div class="section-tag">📰 Yangiliklar</div>
+        <h2 class="section-title">Yangiliklar va e'lonlar</h2>
+        <p class="section-copy">Maktab hayotidagi so'nggi yangiliklar va muhim e'lonlar.</p>
+      </div>
+      <div class="news-grid">
+        <article class="news-card news-featured glass animate-in" style="--delay:0ms">
+          <div class="news-badge">🏆 Yutuq</div>
+          <h3>O'zbekiston qizlar futbol olimpiadasi</h3>
+          <p>O'zbekiston respublikasida o'tkaziladigan qizlar futbol olimpiadasida maktab o'quvchilarimiz
+            hudud va tuman bo'yicha <strong>1-o'rindagi</strong> yutuqlarga ega bo'lishdi. Bu g'alaba butun
+            maktab jamoasi uchun katta faxr!</p>
+          <div class="news-footer">
+            <span class="news-date">📅 2024-yil</span>
+            <span class="news-tag">Sport</span>
+          </div>
+        </article>
+
+        <article class="news-card glass animate-in" style="--delay:100ms">
+          <div class="news-badge">📋 E'lon</div>
+          <h3>Yangi o'quv haftasiga tayyorgarlik</h3>
+          <p>O'quvchilar va ota-onalar uchun dars jadvali hamda ichki tartib bo'yicha ma'lumotlar
+            yangilanmoqda.</p>
+          <div class="news-footer">
+            <span class="news-date">📅 Joriy</span>
+            <span class="news-tag">Ta'lim</span>
+          </div>
+        </article>
+
+        <article class="news-card glass animate-in" style="--delay:200ms">
+          <div class="news-badge">🤝 Tadbir</div>
+          <h3>Ota-onalar bilan ochiq muloqot</h3>
+          <p>Ta'lim sifati, davomat va tarbiyaviy masalalar yuzasidan ochiq muloqot o'tkaziladi.
+            Barcha ota-onalar taklif etiladi.</p>
+          <div class="news-footer">
+            <span class="news-date">📅 Oylik</span>
+            <span class="news-tag">Hamkorlik</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══ EVENTS ═══ -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-tag">🎉 Jadval</div>
+        <h2 class="section-title">Tadbirlar va faoliyat</h2>
+      </div>
+      <div class="events-grid">
+        <div class="event-card glass animate-in" style="--delay:0ms">
+          <div class="event-dot" style="--clr:#3b82f6"></div>
+          <div class="event-content">
+            <h3>Bayram tadbirlari</h3>
+            <p>Milliy va umumxalq bayramlari munosabati bilan ijodiy dasturlar, konsert va musobaqalar o'tkaziladi.</p>
+            <div class="event-tag" style="--clr:#dbeafe;--tc:#1d4ed8">Har yili</div>
+          </div>
+        </div>
+        <div class="event-card glass animate-in" style="--delay:100ms">
+          <div class="event-dot" style="--clr:#8b5cf6"></div>
+          <div class="event-content">
+            <h3>Fan olimpiadalari</h3>
+            <p>Bilimdon o'quvchilar uchun bosqichma-bosqich sinovlar — maktab, tuman, viloyat va respublika darajasida.</p>
+            <div class="event-tag" style="--clr:#ede9fe;--tc:#7c3aed">Har chorak</div>
+          </div>
+        </div>
+        <div class="event-card glass animate-in" style="--delay:200ms">
+          <div class="event-dot" style="--clr:#10b981"></div>
+          <div class="event-content">
+            <h3>Ota-onalar yig'ilishi</h3>
+            <p>Farzandlar ta'limi va tarbiyasi bo'yicha muhim uchrashuvlar. Har oy muntazam ravishda bo'lib o'tadi.</p>
+            <div class="event-tag" style="--clr:#d1fae5;--tc:#065f46">Oylik</div>
+          </div>
+        </div>
+        <div class="event-card glass animate-in" style="--delay:300ms">
+          <div class="event-dot" style="--clr:#f59e0b"></div>
+          <div class="event-content">
+            <h3>Sport musobaqalari</h3>
+            <p>Futbol, basketbol va boshqa sport turlarida maktab jamoalari faol ishtirok etadi.</p>
+            <div class="event-tag" style="--clr:#fef3c7;--tc:#92400e">Mavsum</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ GALLERY ═══ -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-tag">🖼️ Galereya</div>
+        <h2 class="section-title">Maktab hayotidan</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item glass animate-in" style="--delay:0ms;--span:2">
+          <div class="gallery-thumb gallery-main">
+            <span class="gallery-emoji">🏫</span>
+            <div class="gallery-label">Maktab binosi</div>
+          </div>
+        </div>
+        <div class="gallery-item glass animate-in" style="--delay:80ms">
+          <div class="gallery-thumb">
+            <span class="gallery-emoji">📚</span>
+            <div class="gallery-label">Sinfxonalar</div>
+          </div>
+        </div>
+        <div class="gallery-item glass animate-in" style="--delay:160ms">
+          <div class="gallery-thumb">
+            <span class="gallery-emoji">⚽</span>
+            <div class="gallery-label">Sport maydoni</div>
+          </div>
+        </div>
+        <div class="gallery-item glass animate-in" style="--delay:240ms">
+          <div class="gallery-thumb">
+            <span class="gallery-emoji">🎭</span>
+            <div class="gallery-label">Tadbirlar</div>
+          </div>
+        </div>
+        <div class="gallery-item glass animate-in" style="--delay:320ms">
+          <div class="gallery-thumb">
+            <span class="gallery-emoji">🏆</span>
+            <div class="gallery-label">Mukofotlar</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <div class="section-tag">📞 Aloqa</div>
+        <h2 class="section-title">Biz bilan bog'laning</h2>
+        <p class="section-copy">Savollaringiz bormi? Biz sizga yordam berishga tayyormiz.</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Contact Info -->
+        <div class="contact-info-col">
+          <div class="contact-info-card glass animate-in" style="--delay:0ms">
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <div class="contact-label">Telefon</div>
+                <a href="tel:+998982612091" class="contact-value">+998 98 261 20 91</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📧</div>
+              <div>
+                <div class="contact-label">Email</div>
+                <a href="mailto:uychi20maktabi@gmail.com" class="contact-value">uychi20maktabi@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <div class="contact-label">Manzil</div>
+                <div class="contact-value">Uychi tumani, Mashad mahalla, Mashad ko'chasi</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <div class="contact-label">Ish vaqti</div>
+                <div class="contact-value">Dushanba–Shanba: 08:00–18:00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="map-card glass animate-in" style="--delay:120ms">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.837845796527!2d71.7448240764817!3d41.02880341816014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb4d03be89c019%3A0x61e2851ccf4823d4!2sMashad%2C%2020%20Maktab!5e0!3m2!1sen!2s!4v1774181339723!5m2!1sen!2s"
+              width="100%" height="280" style="border:0;border-radius:16px;" allowfullscreen=""
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Maktab xaritasi">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="glass contact-form-card animate-in" id="contact-form" style="--delay:200ms">
+          <h3 class="form-title">Xabar yuboring</h3>
+          <p class="form-subtitle">Barcha maydonlarni to'ldiring. 24 soat ichida javob beramiz.</p>
+
+          <div class="form-group">
+            <label for="name">Ismingiz *</label>
+            <input type="text" id="name" name="name" placeholder="Masalan: Ali Valiyev" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email manzilingiz *</label>
+            <input type="email" id="email" name="email" placeholder="Masalan: ali@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Xabaringiz *</label>
+            <textarea id="message" name="message" placeholder="Savolingiz yoki taklifingizni yozing..." rows="5" required></textarea>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="submit-btn" type="button">
+            <span id="btn-text">Yuborish</span>
+            <span id="btn-loader" class="loader" style="display:none"></span>
+          </button>
+
+          <div id="form-status" class="form-status" role="alert"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box glass">
+        <div class="footer-brand">
+          <div class="brand-badge">20</div>
+          <div>
+            <strong>20-sonli umumiy o'rta ta'lim maktabi</strong>
+            <div class="muted">Ilmli avlod — porloq kelajak bunyodkori</div>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="#about">Maktab haqida</a>
+          <a href="#leaders">Rahbariyat</a>
+          <a href="#subjects">Fanlar</a>
+          <a href="#news">Yangiliklar</a>
+          <a href="#contact">Aloqa</a>
+          <a href="/admin" class="muted" style="font-size:12px">⚙️ Admin</a>
+        </div>
+        <div class="footer-copy muted">© <span id="year"></span> Barcha huquqlar himoyalangan</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-top glass" id="back-top" aria-label="Tepaga qaytish">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

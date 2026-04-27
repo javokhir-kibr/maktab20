@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>O'quvchi paneli — 20-sonli Maktab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#eef4ff;--bg2:#f8fbff;--card:rgba(255,255,255,.78);--stroke:rgba(200,220,255,.65);
+      --text:#0f172a;--muted:#475569;--primary:#1d4ed8;--p2:#3b82f6;--p3:#93c5fd;
+      --shadow:0 20px 60px rgba(29,78,216,.14);--shadow-sm:0 8px 24px rgba(29,78,216,.1);
+      --radius:22px;--font-d:'Playfair Display',Georgia,serif;--font-b:'Noto Sans',Arial,sans-serif;
+    }
+    [data-theme=dark]{
+      --bg:#050e1d;--bg2:#0f1c2e;--card:rgba(15,28,46,.88);--stroke:rgba(59,130,246,.18);
+      --text:#f1f5f9;--muted:#94a3b8;--shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-b);color:var(--text);min-height:100vh;
+      background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(59,130,246,.12),transparent),linear-gradient(180deg,var(--bg),var(--bg2));
+    }
+    a{text-decoration:none;color:inherit;}
+
+    /* Navbar */
+    .navbar{
+      position:sticky;top:0;z-index:50;
+      background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--stroke);box-shadow:var(--shadow-sm);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:16px;}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .badge{
+      width:40px;height:40px;border-radius:12px;
+      background:linear-gradient(135deg,var(--primary),var(--p2));
+      color:#fff;font-family:var(--font-d);font-weight:900;font-size:16px;
+      display:grid;place-items:center;flex-shrink:0;
+    }
+    .brand-name{font-weight:800;font-size:15px;}
+    .brand-tag{font-size:11px;color:var(--muted);}
+    .nav-right{display:flex;align-items:center;gap:10px;}
+    .user-chip{
+      display:flex;align-items:center;gap:8px;
+      padding:7px 14px;border-radius:999px;
+      background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);
+      font-size:13px;font-weight:700;
+    }
+    .icon-btn{
+      width:38px;height:38px;border-radius:11px;
+      background:var(--card);border:1px solid var(--stroke);
+      cursor:pointer;font-size:16px;display:grid;place-items:center;
+      transition:all .2s;
+    }
+    .icon-btn:hover{box-shadow:var(--shadow-sm);transform:translateY(-1px);}
+    .moon{display:none;}
+    [data-theme=dark] .sun{display:none;}
+    [data-theme=dark] .moon{display:block;}
+
+    /* Layout */
+    .container{max-width:1100px;margin:0 auto;padding:32px 20px 60px;}
+    .page-grid{display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;}
+
+    /* Sidebar */
+    .sidebar{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;}
+    .profile-card{
+      background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--stroke);
+      box-shadow:var(--shadow);border-radius:var(--radius);padding:26px 22px;text-align:center;
+    }
+    .avatar{
+      width:80px;height:80px;border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--p2));
+      color:#fff;font-family:var(--font-d);font-weight:900;font-size:26px;
+      display:grid;place-items:center;margin:0 auto 14px;
+      box-shadow:0 8px 24px rgba(29,78,216,.3);
+    }
+    .profile-name{font-weight:800;font-size:17px;margin-bottom:4px;}
+    .profile-role{
+      display:inline-block;padding:4px 12px;border-radius:999px;
+      font-size:12px;font-weight:700;color:var(--primary);
+      background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);
+      margin-bottom:12px;
+    }
+    .profile-info{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+    .info-row{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:8px 12px;border-radius:10px;background:rgba(59,130,246,.04);
+      border:1px solid var(--stroke);font-size:13px;
+    }
+    .info-label{color:var(--muted);font-weight:600;}
+    .info-val{font-weight:700;}
+
+    .nav-menu{
+      background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--stroke);
+      box-shadow:var(--shadow-sm);border-radius:var(--radius);overflow:hidden;
+    }
+    .nav-item{
+      display:flex;align-items:center;gap:12px;
+      padding:14px 18px;font-size:14px;font-weight:700;
+      cursor:pointer;transition:all .2s;border-bottom:1px solid var(--stroke);
+      background:none;border-left:none;border-right:none;border-top:none;
+      color:var(--text);text-align:left;width:100%;
+    }
+    .nav-item:last-child{border-bottom:none;}
+    .nav-item:hover,.nav-item.active{background:rgba(59,130,246,.08);color:var(--primary);}
+    .nav-item .nav-icon{font-size:18px;width:24px;text-align:center;}
+
+    /* Main */
+    .main{display:flex;flex-direction:column;gap:20px;}
+
+    /* Section */
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .section-title{font-family:var(--font-d);font-size:1.55rem;letter-spacing:-.03em;}
+
+    .card{
+      background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--stroke);
+      box-shadow:var(--shadow-sm);border-radius:var(--radius);padding:24px;
+    }
+
+    /* Tab panels */
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+
+    /* Announcements */
+    .ann-list{display:flex;flex-direction:column;gap:14px;}
+    .ann-card{
+      padding:20px;border-radius:18px;
+      background:rgba(59,130,246,.04);border:1px solid var(--stroke);
+      transition:transform .2s;
+    }
+    .ann-card:hover{transform:translateY(-2px);}
+    .ann-card.pinned{border-color:rgba(29,78,216,.3);background:rgba(29,78,216,.06);}
+    .ann-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
+    .ann-title{font-weight:800;font-size:15.5px;}
+    .pin-badge{
+      font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+      background:rgba(29,78,216,.12);color:var(--primary);flex-shrink:0;
+    }
+    .ann-body{color:var(--muted);font-size:14px;line-height:1.7;}
+    .ann-foot{display:flex;align-items:center;gap:12px;margin-top:10px;font-size:12px;color:var(--muted);}
+    .ann-author{font-weight:600;}
+
+    /* Schedule */
+    .schedule-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+    .sch-card{
+      padding:16px;border-radius:16px;
+      background:rgba(59,130,246,.04);border:1px solid var(--stroke);
+    }
+    .sch-day{font-size:12px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+    .sch-lesson{
+      display:flex;align-items:center;gap:8px;
+      padding:6px 0;border-bottom:1px solid var(--stroke);
+      font-size:13px;
+    }
+    .sch-lesson:last-child{border-bottom:none;}
+    .sch-num{
+      width:22px;height:22px;border-radius:6px;
+      background:rgba(59,130,246,.1);color:var(--primary);
+      font-size:11px;font-weight:800;display:grid;place-items:center;flex-shrink:0;
+    }
+
+    /* Grades */
+    .grades-table{width:100%;border-collapse:separate;border-spacing:0 8px;}
+    .grades-table th{
+      text-align:left;padding:10px 14px;font-size:12px;
+      font-weight:700;color:var(--muted);letter-spacing:.04em;
+    }
+    .grades-table td{
+      padding:12px 14px;font-size:14px;
+      background:rgba(59,130,246,.04);border:1px solid var(--stroke);
+    }
+    .grades-table td:first-child{border-radius:12px 0 0 12px;font-weight:700;}
+    .grades-table td:last-child{border-radius:0 12px 12px 0;border-left:none;}
+    .grades-table td:not(:first-child):not(:last-child){border-left:none;border-right:none;}
+    .grade-pill{
+      display:inline-block;padding:4px 12px;border-radius:999px;
+      font-size:13px;font-weight:800;
+    }
+    .grade-5{background:rgba(16,185,129,.1);color:#065f46;}
+    .grade-4{background:rgba(59,130,246,.1);color:#1d4ed8;}
+    .grade-3{background:rgba(245,158,11,.1);color:#92400e;}
+    [data-theme=dark] .grade-5{color:#6ee7b7;} [data-theme=dark] .grade-4{color:#93c5fd;} [data-theme=dark] .grade-3{color:#fcd34d;}
+
+    /* Contact form */
+    .form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+    label{font-size:12.5px;font-weight:700;}
+    input,textarea{
+      border:1.5px solid var(--stroke);background:rgba(59,130,246,.03);
+      border-radius:13px;padding:11px 14px;font:inherit;font-size:14px;
+      color:var(--text);outline:none;width:100%;transition:border-color .2s,box-shadow .2s;
+    }
+    input:focus,textarea:focus{border-color:var(--p2);box-shadow:0 0 0 4px rgba(59,130,246,.1);}
+    input::placeholder,textarea::placeholder{color:var(--muted);}
+    textarea{min-height:110px;resize:vertical;}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 22px;border-radius:13px;font:inherit;font-weight:800;
+      font-size:14px;cursor:pointer;border:none;
+      background:linear-gradient(135deg,var(--primary),var(--p2));
+      color:#fff;box-shadow:0 10px 24px rgba(29,78,216,.3);
+      transition:all .25s;
+    }
+    .btn:hover{transform:translateY(-2px);}
+    .btn:disabled{opacity:.6;pointer-events:none;}
+    .btn-full{width:100%;}
+    .form-status{margin-top:12px;padding:10px 14px;border-radius:12px;font-size:13.5px;font-weight:600;display:none;}
+    .form-status.success{display:block;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#065f46;}
+    .form-status.error{display:block;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#991b1b;}
+    [data-theme=dark] .form-status.success{color:#6ee7b7;} [data-theme=dark] .form-status.error{color:#fca5a5;}
+    .loader{width:15px;height:15px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Stats row */
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+    .stat-mini{padding:16px 18px;border-radius:18px;background:rgba(59,130,246,.04);border:1px solid var(--stroke);}
+    .stat-mini .icon{font-size:22px;margin-bottom:6px;}
+    .stat-mini .val{font-family:var(--font-d);font-size:1.6rem;font-weight:900;color:var(--primary);}
+    .stat-mini .lbl{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
+
+    /* Empty */
+    .empty{text-align:center;padding:40px 20px;color:var(--muted);}
+    .empty-icon{font-size:42px;margin-bottom:12px;}
+
+    @media(max-width:768px){
+      .page-grid{grid-template-columns:1fr;}
+      .sidebar{position:static;}
+      .stats-row{grid-template-columns:1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div id="c-glow" style="position:fixed;pointer-events:none;z-index:0;width:700px;height:700px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(29,78,216,.16) 0%,transparent 68%);left:-999px;top:-999px;"></div>
+  <div id="c-ring" style="position:fixed;pointer-events:none;z-index:9998;width:38px;height:38px;border-radius:50%;border:2.5px solid rgba(59,130,246,.55);transform:translate(-50%,-50%);transition:width .22s,height .22s;"></div>
+  <div id="c-dot"  style="position:fixed;pointer-events:none;z-index:9999;width:10px;height:10px;border-radius:50%;background:#1d4ed8;transform:translate(-50%,-50%);"></div>
+  <div id="scroll-bar" style="position:fixed;top:0;left:0;z-index:9999;height:3px;width:0;background:linear-gradient(90deg,#1d4ed8,#3b82f6,#a78bfa);box-shadow:0 0 12px rgba(59,130,246,.7);pointer-events:none;transition:width .1s linear;"></div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <div class="badge">20</div>
+      <div>
+        <div class="brand-name">20-sonli Maktab</div>
+        <div class="brand-tag">O'quvchi paneli</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <div class="user-chip">
+        <span>👤</span>
+        <span id="userName">...</span>
+      </div>
+      <button class="icon-btn" id="themeBtn"><span class="sun">☀️</span><span class="moon">🌙</span></button>
+      <button class="icon-btn" id="logoutBtn" title="Chiqish">🚪</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-grid">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <div class="avatar" id="userAvatar">—</div>
+        <div class="profile-name" id="profileName">Yuklanmoqda...</div>
+        <div class="profile-role" id="profileRole">—</div>
+        <div class="profile-info">
+          <div class="info-row"><span class="info-label">Login</span><span class="info-val" id="profileLogin">—</span></div>
+          <div class="info-row"><span class="info-label">Sinf</span><span class="info-val" id="profileClass">—</span></div>
+          <div class="info-row"><span class="info-label">Maktab</span><span class="info-val">20-sonli</span></div>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="announcements"><span class="nav-icon">📢</span> E'lonlar</button>
+        <button class="nav-item" data-tab="schedule"><span class="nav-icon">📅</span> Dars jadvali</button>
+        <button class="nav-item" data-tab="grades"><span class="nav-icon">📊</span> Baholar</button>
+        <button class="nav-item" data-tab="contact"><span class="nav-icon">📬</span> Xabar yuborish</button>
+        <a href="/" class="nav-item"><span class="nav-icon">🏠</span> Bosh sahifa</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+      <!-- Announcements -->
+      <div class="tab-panel active" id="tab-announcements">
+        <div class="section-head">
+          <h2 class="section-title">📢 E'lonlar</h2>
+        </div>
+        <div class="card">
+          <div id="ann-list" class="ann-list">
+            <div class="empty"><div class="empty-icon">⏳</div>Yuklanmoqda...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule -->
+      <div class="tab-panel" id="tab-schedule">
+        <div class="section-head">
+          <h2 class="section-title">📅 Dars jadvali</h2>
+        </div>
+        <div class="card">
+          <div class="stats-row">
+            <div class="stat-mini"><div class="icon">🕐</div><div class="val">8:00</div><div class="lbl">Boshlanish</div></div>
+            <div class="stat-mini"><div class="icon">📚</div><div class="val">6</div><div class="lbl">Kunlik darslar</div></div>
+            <div class="stat-mini"><div class="icon">☕</div><div class="val">45</div><div class="lbl">Tanaffus (daq)</div></div>
+          </div>
+          <div class="schedule-grid">
+            <div class="sch-card">
+              <div class="sch-day">Dushanba</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Ona tili</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Fizika</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Ingliz tili</div>
+              <div class="sch-lesson"><span class="sch-num">5</span> Tarix</div>
+              <div class="sch-lesson"><span class="sch-num">6</span> Biologiya</div>
+            </div>
+            <div class="sch-card">
+              <div class="sch-day">Seshanba</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Ingliz tili</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Kimyo</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Informatika</div>
+              <div class="sch-lesson"><span class="sch-num">5</span> Adabiyot</div>
+              <div class="sch-lesson"><span class="sch-num">6</span> Jismoniy</div>
+            </div>
+            <div class="sch-card">
+              <div class="sch-day">Chorshanba</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Fizika</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Tarix</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Ona tili</div>
+              <div class="sch-lesson"><span class="sch-num">5</span> Kimyo</div>
+              <div class="sch-lesson"><span class="sch-num">6</span> Ingliz tili</div>
+            </div>
+            <div class="sch-card">
+              <div class="sch-day">Payshanba</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Biologiya</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Adabiyot</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Ingliz tili</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">5</span> Fizika</div>
+              <div class="sch-lesson"><span class="sch-num">6</span> Informatika</div>
+            </div>
+            <div class="sch-card">
+              <div class="sch-day">Juma</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Kimyo</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Biologiya</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Tarix</div>
+              <div class="sch-lesson"><span class="sch-num">5</span> Ona tili</div>
+              <div class="sch-lesson"><span class="sch-num">6</span> Jismoniy</div>
+            </div>
+            <div class="sch-card">
+              <div class="sch-day">Shanba</div>
+              <div class="sch-lesson"><span class="sch-num">1</span> Informatika</div>
+              <div class="sch-lesson"><span class="sch-num">2</span> Ingliz tili</div>
+              <div class="sch-lesson"><span class="sch-num">3</span> Matematika</div>
+              <div class="sch-lesson"><span class="sch-num">4</span> Adabiyot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grades -->
+      <div class="tab-panel" id="tab-grades">
+        <div class="section-head">
+          <h2 class="section-title">📊 Baholar</h2>
+        </div>
+        <div class="card">
+          <p style="color:var(--muted);font-size:13.5px;margin-bottom:16px;">Namunaviy baholar ko'rsatilmoqda. Haqiqiy baholar o'qituvchi tomonidan kiritiladi.</p>
+          <table class="grades-table">
+            <thead>
+              <tr>
+                <th>Fan</th><th>1-chorak</th><th>2-chorak</th><th>3-chorak</th><th>4-chorak</th><th>Yillik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Matematika</td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-5">5</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Ona tili</td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-5">5</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Ingliz tili</td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-5">5</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Fizika</td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-3">3</span></td><td><span class="grade-pill grade-4">4</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Kimyo</td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-4">4</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Biologiya</td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-4">4</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Tarix</td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-4">4</span></td><td><span class="grade-pill grade-5">5</span></td><td>—</td><td>—</td></tr>
+              <tr><td>Informatika</td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-5">5</span></td><td><span class="grade-pill grade-5">5</span></td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="tab-panel" id="tab-contact">
+        <div class="section-head">
+          <h2 class="section-title">📬 Xabar yuborish</h2>
+        </div>
+        <div class="card">
+          <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">Savol yoki muammoingiz bo'lsa, rahbariyatga xabar yuboring.</p>
+          <div class="form-group">
+            <label>Ismingiz</label>
+            <input type="text" id="c-name" placeholder="To'liq ismingiz"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="c-email" placeholder="Email manzilingiz"/>
+          </div>
+          <div class="form-group">
+            <label>Xabar</label>
+            <textarea id="c-msg" placeholder="Xabaringizni yozing..."></textarea>
+          </div>
+          <button class="btn btn-full" id="c-submit">
+            <span id="c-txt">Yuborish</span>
+            <span id="c-loader" class="loader" style="display:none"></span>
+          </button>
+          <div class="form-status" id="c-status"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // Theme
+  const html = document.documentElement;
+  html.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    const n = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', n); localStorage.setItem('theme', n);
+  });
+
+  // Auth check
+  const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
+  if (!token || !userStr) { window.location.href = '/login'; }
+
+  const user = JSON.parse(userStr || '{}');
+  const initials = (user.name || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('userName').textContent  = user.name || '—';
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('profileName').textContent = user.name || '—';
+  document.getElementById('profileRole').textContent = user.roleLabel || user.role || '—';
+  document.getElementById('profileLogin').textContent = user.login || '—';
+  document.getElementById('profileClass').textContent = user.class || 'Ko\'rsatilmagan';
+
+  // Pre-fill contact
+  if (user.name)  document.getElementById('c-name').value  = user.name;
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await fetch('/api/auth/logout', { method:'POST', headers:{'x-token': token} }).catch(()=>{});
+    localStorage.removeItem('token'); localStorage.removeItem('user');
+    window.location.href = '/login';
+  });
+
+  // Tabs
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Load announcements
+  async function loadAnn() {
+    const el = document.getElementById('ann-list');
+    try {
+      const res  = await fetch('/api/announcements');
+      const data = await res.json();
+      const list = data.announcements || [];
+      if (!list.length) {
+        el.innerHTML = '<div class="empty"><div class="empty-icon">📭</div>Hozircha e\'lonlar yo\'q.</div>'; return;
+      }
+      el.innerHTML = list.map(a => `
+        <div class="ann-card ${a.pinned ? 'pinned' : ''}">
+          <div class="ann-top">
+            <div class="ann-title">${esc(a.title)}</div>
+            ${a.pinned ? '<span class="pin-badge">📌 Muhim</span>' : ''}
+          </div>
+          <div class="ann-body">${esc(a.body)}</div>
+          <div class="ann-foot">
+            <span class="ann-author">✍️ ${esc(a.author)}</span>
+            <span>📅 ${fmt(a.createdAt)}</span>
+          </div>
+        </div>`).join('');
+    } catch { el.innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>Yuklab bo\'lmadi.</div>'; }
+  }
+  loadAnn();
+
+  // Contact form
+  document.getElementById('c-submit').addEventListener('click', async () => {
+    const name    = document.getElementById('c-name').value.trim();
+    const email   = document.getElementById('c-email').value.trim();
+    const message = document.getElementById('c-msg').value.trim();
+    const statusEl = document.getElementById('c-status');
+    statusEl.className = 'form-status';
+
+    if (!name || !email || !message) {
+      statusEl.textContent = '⚠️ Barcha maydonlarni to\'ldiring.';
+      statusEl.className = 'form-status error'; return;
+    }
+
+    const btn = document.getElementById('c-submit');
+    btn.disabled = true;
+    document.getElementById('c-txt').style.display = 'none';
+    document.getElementById('c-loader').style.display = 'block';
+
+    try {
+      const res  = await fetch('/api/contact', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, email, message })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || data.errors?.join(' '));
+      statusEl.textContent = '✅ ' + data.message;
+      statusEl.className = 'form-status success';
+      document.getElementById('c-msg').value = '';
+    } catch(e) {
+      statusEl.textContent = '❌ ' + e.message;
+      statusEl.className = 'form-status error';
+    } finally {
+      btn.disabled = false;
+      document.getElementById('c-txt').style.display = 'inline';
+      document.getElementById('c-loader').style.display = 'none';
+    }
+  });
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function fmt(iso){ return new Date(iso).toLocaleString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+</script>
+<script>
+(function(){
+  var d=document.getElementById('c-dot'),r=document.getElementById('c-ring'),g=document.getElementById('c-glow'),b=document.getElementById('scroll-bar');
+  if(!d)return;
+  document.documentElement.style.cssText+='cursor:none!important;';
+  var mx=0,my=0,rx=0,ry=0,gx=window.innerWidth/2,gy=window.innerHeight/2;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+  (function L(){
+    d.style.left=mx+'px';d.style.top=my+'px';
+    rx+=(mx-rx)*.16;ry+=(my-ry)*.16;r.style.left=rx+'px';r.style.top=ry+'px';
+    gx+=(mx-gx)*.06;gy+=(my-gy)*.06;g.style.left=gx+'px';g.style.top=gy+'px';
+    requestAnimationFrame(L);
+  })();
+  document.querySelectorAll('a,button,input,textarea,.card,.nav-item,.btn').forEach(function(el){
+    el.addEventListener('mouseenter',function(){r.style.width='60px';r.style.height='60px';r.style.borderColor='#1d4ed8';d.style.width='18px';d.style.height='18px';d.style.opacity='.6';});
+    el.addEventListener('mouseleave',function(){r.style.width='38px';r.style.height='38px';r.style.borderColor='rgba(59,130,246,.55)';d.style.width='10px';d.style.height='10px';d.style.opacity='1';});
+  });
+  if(b){window.addEventListener('scroll',function(){var t=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(t>0?window.scrollY/t*100:0)+'%';},{passive:true});}
+})();
+</script>
+</body>
+</html>
